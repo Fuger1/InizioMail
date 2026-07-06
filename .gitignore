@@ -1,0 +1,10 @@
+node_modules/
+dist/
+out/
+build/
+*.exe
+*.zip
+*.blockmap
+*.log
+.DS_Store
+.env

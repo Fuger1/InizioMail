@@ -1,0 +1,740 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>InizioWeb · Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  /* Champagne-gold on warm-dark — matched to inizioweb.co.uk (oklch tokens) */
+  :root{
+    --bg:oklch(0.145 0.005 70); --bg2:oklch(0.17 0.006 70);
+    --glass:oklch(1 0 0 / 6%); --glass2:oklch(1 0 0 / 10%);
+    --line:oklch(1 0 0 / 8%); --line2:oklch(1 0 0 / 14%); --hair:oklch(1 0 0 / 22%);
+    --txt:oklch(0.96 0.008 80); --mut:oklch(0.72 0.012 80); --faint:oklch(0.6 0.01 80);
+    --accent:oklch(0.86 0.085 88); --accent2:oklch(0.78 0.11 84);
+    --grad:linear-gradient(135deg,oklch(0.92 0.05 86),oklch(0.78 0.11 84));
+    --ok:#3ddc97; --warn:#f5b950; --bad:oklch(0.62 0.22 27); --blu:#c9a86a;
+    --r-sm:16px; --r-md:22px; --r-lg:28px;
+    --blur:saturate(150%) blur(34px);
+    --shadow:0 24px 60px -24px rgba(0,0,0,.65), inset 0 1px 0 var(--hair);
+    --focus:oklch(0.86 0.085 88 / 18%);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{
+    font-family:"Manrope","Sora",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    color:var(--txt); min-height:100%; overflow:hidden; -webkit-font-smoothing:antialiased;
+    background:
+      radial-gradient(120% 90% at 50% -10%,oklch(0.22 0.02 82 / 55%),transparent 60%),
+      radial-gradient(80% 70% at 100% 100%,oklch(0.2 0.03 60 / 40%),transparent 65%),
+      linear-gradient(160deg,oklch(0.17 0.008 70) 0%,var(--bg) 55%,oklch(0.12 0.006 70) 100%);
+  }
+  /* frosted glass veil — blurs the ambient light so panels read as premium frosted glass */
+  body::after{
+    content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
+    backdrop-filter:saturate(130%) blur(60px); -webkit-backdrop-filter:saturate(130%) blur(60px);
+    background:oklch(1 0 0 / 2%);
+    -webkit-mask-image:radial-gradient(140% 120% at 50% 0%,#000 40%,transparent 100%);
+            mask-image:radial-gradient(140% 120% at 50% 0%,#000 40%,transparent 100%);
+  }
+  .aurora::before{
+    content:""; position:fixed; inset:-20% -10% auto -10%; height:80vh; z-index:0; pointer-events:none;
+    background:
+      radial-gradient(52% 60% at 50% 0%,oklch(0.86 0.085 88 / 32%),transparent 70%),
+      radial-gradient(40% 55% at 20% 12%,oklch(0.78 0.11 84 / 22%),transparent 70%),
+      radial-gradient(45% 55% at 85% 6%,oklch(0.9 0.05 86 / 18%),transparent 72%);
+    filter:blur(46px); animation:drift 18s ease-in-out infinite alternate;
+  }
+  @keyframes drift{from{transform:translate3d(0,0,0)}to{transform:translate3d(0,-4%,0) scale(1.05)}}
+  @keyframes fade{from{opacity:0;transform:translateY(12px);filter:blur(8px)}to{opacity:1;transform:none;filter:none}}
+  .fade{animation:fade .48s cubic-bezier(.22,1,.36,1) both}
+  .glass{background:var(--glass);border:1px solid var(--line);border-radius:var(--r-lg);
+    backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);box-shadow:var(--shadow)}
+  .gtext{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hide{display:none!important}
+  .mut{color:var(--mut)}
+  a{color:inherit;text-decoration:none}
+  button{font-family:inherit;cursor:pointer}
+  ::-webkit-scrollbar{width:9px;height:9px}
+  ::-webkit-scrollbar-thumb{background:var(--line2);border-radius:9px}
+  input,textarea{font-family:inherit;width:100%;padding:12px 14px;border-radius:14px;border:1px solid var(--line2);
+    background:rgba(0,0,0,.3);color:var(--txt);font-size:14px;outline:none;transition:.15s}
+  input:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--focus)}
+  h1,.h1,.brand,.eyebrow{font-family:"Sora","Manrope",sans-serif;letter-spacing:-.01em}
+  textarea{resize:none}
+  label{font-size:12px;color:var(--mut);font-weight:600;display:block;margin:0 0 6px 2px}
+  .btn{border:1px solid var(--line2);background:var(--glass);color:var(--txt);padding:10px 16px;border-radius:999px;
+    font-weight:600;font-size:13px;transition:.15s;display:inline-flex;align-items:center;gap:8px;justify-content:center}
+  .btn:hover{background:var(--glass2)}
+  .btn.pri{border:none;background:var(--grad);color:oklch(0.15 0.005 70);box-shadow:0 8px 24px -8px oklch(0.78 0.11 84 / 55%)}
+  .btn.pri:hover{filter:brightness(1.1)}
+  .btn.danger{border-color:rgba(255,107,107,.4);background:rgba(255,107,107,.1);color:var(--bad)}
+  .btn:disabled{opacity:.5;cursor:default}
+  .pill{display:inline-flex;align-items:center;gap:6px;padding:4px 11px;border-radius:999px;font-size:11px;
+    font-weight:600;border:1px solid var(--line2);background:var(--glass)}
+  .eyebrow{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--mut)}
+  .h1{font-size:26px;font-weight:800;margin:2px 0 0}
+  .sub{color:var(--mut);font-size:14px;margin:6px 0 0}
+
+  /* LOGIN */
+  #login{position:relative;z-index:1;min-height:100vh;display:grid;place-items:center;padding:24px}
+  .lcard{width:100%;max-width:420px;padding:34px 32px}
+  .brand{display:flex;align-items:center;gap:11px;font-weight:800;letter-spacing:.4px}
+  .brand .mark{width:40px;height:40px;border-radius:13px;background:var(--grad);display:grid;place-items:center;
+    color:oklch(0.15 0.005 70);font-weight:900;font-size:13px}
+  .field{margin:16px 0}
+  .err{color:var(--bad);font-size:13px;margin-top:12px;min-height:16px}
+
+  /* APP */
+  #app{position:relative;z-index:1;display:grid;grid-template-columns:250px 1fr;height:100vh}
+  aside{padding:22px 16px;display:flex;flex-direction:column;gap:6px;border-radius:0 var(--r-lg) var(--r-lg) 0;
+    border:1px solid var(--line);border-left:none}
+  .nav{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:16px;color:var(--mut);
+    font-weight:600;font-size:14px;border:1px solid transparent;transition:.15s}
+  .nav:hover{color:var(--txt);background:var(--glass2)}
+  .nav.on{color:oklch(0.15 0.005 70);background:var(--grad);box-shadow:0 8px 24px -10px oklch(0.78 0.11 84 / 60%)}
+  .nav svg{width:18px;height:18px;flex:none}
+  main{overflow-y:auto;padding:28px 34px;height:100vh}
+  .wrap{max-width:1120px;margin:0 auto}
+
+  .stats{display:grid;gap:16px;grid-template-columns:repeat(4,1fr);margin:20px 0}
+  .stat{padding:18px}
+  .stat .n{font-size:28px;font-weight:800;margin:6px 0 2px}
+  .stat .l{font-size:12px;color:var(--mut);font-weight:600}
+  .cards{display:grid;gap:16px;grid-template-columns:repeat(4,1fr)}
+  @media(max-width:1000px){.stats,.cards{grid-template-columns:repeat(2,1fr)}}
+
+  /* hero */
+  .hero{position:relative;height:300px;overflow:hidden;margin-bottom:16px}
+  .hero canvas{width:100%;height:100%;display:block}
+  .hero .cap{position:absolute;left:24px;top:22px;pointer-events:none}
+
+  /* status */
+  .svc{padding:18px}
+  .svc .top{display:flex;align-items:center;justify-content:space-between}
+  .svc .nm{display:flex;align-items:center;gap:10px;font-weight:700;font-size:14px}
+  .svc .role{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--mut);margin-top:8px}
+  .svc .desc{font-size:12px;color:var(--txt);margin-top:12px;min-height:34px}
+  .svc .meta{display:flex;justify-content:space-between;margin-top:12px;padding-top:12px;border-top:1px solid var(--line);
+    font-family:ui-monospace,monospace;font-size:11px;color:var(--mut)}
+  .dotc{width:9px;height:9px;border-radius:50%}
+  .stpill{font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px}
+
+  /* email 3-pane */
+  .three{display:grid;gap:16px;grid-template-columns:210px minmax(0,1fr) minmax(0,1fr)}
+  @media(max-width:1050px){.three{grid-template-columns:1fr}}
+  .tlist{padding:12px;max-height:74vh;overflow:auto}
+  .titem{display:block;width:100%;text-align:left;padding:11px 13px;border-radius:14px;color:var(--mut);
+    font-size:13.5px;font-weight:600;border:1px solid transparent;transition:.12s;margin-bottom:4px;background:none}
+  .titem:hover{background:var(--glass2);color:var(--txt)}
+  .titem.on{background:var(--grad);color:#fff}
+  .compose{padding:20px;display:flex;flex-direction:column;gap:12px}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;border:1px solid var(--line2);border-radius:14px;padding:8px;background:rgba(0,0,0,.3)}
+  .chip{display:flex;align-items:center;gap:6px;background:var(--glass2);border-radius:999px;padding:4px 10px;font-size:12px}
+  .chip button{background:none;border:none;color:var(--mut);font-size:14px;line-height:1}
+  .chips input{border:none;background:none;box-shadow:none;flex:1;min-width:120px;padding:6px 8px;width:auto}
+  .preview{padding:20px}
+  .preview iframe{width:100%;height:60vh;border:none;border-radius:16px;background:#fff}
+
+  /* inbox */
+  .ibx{display:grid;gap:16px;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr)}
+  @media(max-width:1000px){.ibx{grid-template-columns:1fr}}
+  .msglist{padding:10px;max-height:74vh;overflow:auto}
+  .mcard{display:block;width:100%;text-align:left;background:none;border:1px solid transparent;border-radius:16px;
+    padding:13px;margin-bottom:6px;transition:.12s;color:var(--txt)}
+  .mcard:hover{background:var(--glass)}
+  .mcard.on{border-color:var(--accent);background:var(--glass2)}
+  .mcard .r1{display:flex;justify-content:space-between;align-items:center;gap:8px}
+  .mcard .nm{font-weight:700;font-size:13.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .mcard .sj{font-size:12.5px;color:var(--txt);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .mcard .pv{font-size:11.5px;color:var(--mut);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .unread{width:8px;height:8px;border-radius:50%;background:var(--grad);flex:none}
+  .st{font-size:10.5px;padding:3px 9px;border-radius:999px;font-weight:700;text-transform:capitalize}
+  .st.received{background:rgba(122,162,255,.15);color:var(--blu)}
+  .st.review{background:rgba(245,185,80,.15);color:var(--warn)}
+  .st.paid,.st.live{background:rgba(61,220,151,.16);color:var(--ok)}
+  .st.rejected{background:rgba(255,107,107,.15);color:var(--bad)}
+  .st.default{background:rgba(255,255,255,.08);color:var(--mut)}
+  .reader{padding:22px;max-height:74vh;overflow:auto}
+  .kv{display:grid;grid-template-columns:120px 1fr;gap:6px 14px;font-size:13.5px;margin-top:16px}
+  .kv .k{color:var(--mut);font-weight:600}
+  .msg{padding:12px 14px;border-radius:14px;border:1px solid var(--line);margin-top:10px;font-size:13.5px}
+  .msg.admin{background:oklch(0.86 0.085 88 / 8%);border-color:oklch(0.86 0.085 88 / 22%)}
+
+  .spin{width:22px;height:22px;border:2.5px solid rgba(255,255,255,.15);border-top-color:var(--accent);
+    border-radius:50%;animation:sp 1s linear infinite;margin:40px auto;display:block}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  .empty{text-align:center;color:var(--mut);padding:46px 20px;font-size:14px}
+  /* dashboard — matched to website admin */
+  .ov{padding:26px 30px;margin-bottom:16px}
+  .ovchips{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+  .ovchip{display:inline-flex;align-items:center;gap:7px;padding:6px 13px;border-radius:999px;
+    border:1px solid var(--line2);background:var(--glass);font-size:12.5px;color:var(--mut)}
+  .ovchip b{color:var(--txt);font-weight:700}
+  .gauges{display:grid;gap:16px;grid-template-columns:repeat(4,1fr);margin-bottom:16px}
+  @media(max-width:1000px){.gauges{grid-template-columns:repeat(2,1fr)}}
+  .gauge{padding:22px;display:flex;align-items:center;justify-content:space-between;min-height:116px}
+  .gauge .n{font-size:34px;font-weight:800;line-height:1}
+  .gauge .l{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);margin-top:8px;font-weight:600}
+  .gauge .sfoot{font-size:11px;color:var(--faint);margin-top:5px}
+  .ring{width:58px;height:58px;flex:none}
+  .dashgrid{display:grid;gap:16px;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr)}
+  @media(max-width:1000px){.dashgrid{grid-template-columns:1fr}}
+  .ctitle{font-family:"Sora",sans-serif;font-size:20px;font-weight:800;margin-bottom:14px}
+  .chartcard{padding:22px}
+  .chartcard canvas{width:100%;height:220px;display:block}
+  .cxaxis{display:flex;justify-content:space-between;font-size:11px;letter-spacing:.06em;color:var(--faint);margin-top:8px}
+  .actcard{padding:22px}
+  .actrow{display:flex;align-items:center;gap:12px;padding:11px 0}
+  .actrow+.actrow{border-top:1px solid var(--line)}
+  .av{width:38px;height:38px;border-radius:50%;flex:none;display:grid;place-items:center;font-size:12px;
+    font-weight:700;color:oklch(0.15 0.005 70);background:var(--grad)}
+  .actmeta{flex:1;min-width:0}
+  .actname{font-weight:700;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .acttime{font-size:12px;color:var(--mut)}
+  .badge{font-size:10.5px;font-weight:700;letter-spacing:.06em;padding:4px 11px;border-radius:999px;text-transform:uppercase}
+  .badge.approved{color:var(--accent);border:1px solid oklch(0.86 0.085 88 / 40%);background:oklch(0.86 0.085 88 / 10%)}
+  .badge.rejected{color:var(--bad);border:1px solid oklch(0.62 0.22 27 / 45%);background:oklch(0.62 0.22 27 / 12%)}
+  .badge.default{color:var(--mut);border:1px solid var(--line2);background:var(--glass)}
+  .status-msg{font-size:12.5px;min-height:16px}
+  .status-msg.ok{color:var(--ok)} .status-msg.err{color:var(--bad)} .status-msg.info{color:var(--blu)}
+</style>
+</head>
+<body class="aurora">
+
+<!-- ============ LOGIN ============ -->
+<section id="login" class="fade">
+  <div class="lcard glass">
+    <div class="brand"><span class="mark">IW</span><span>InizioWeb</span><span class="mut" style="font-weight:600">· Admin</span></div>
+    <p class="sub" style="margin-top:16px">Secure control room — enquiries, inboxes, email &amp; hosting.</p>
+
+    <div id="pwStep">
+      <div class="field"><label>Email</label><input id="email" type="email" autocomplete="username" placeholder="antonio@inizioweb.co.uk"/></div>
+      <div class="field"><label>Password</label><input id="pw" type="password" autocomplete="current-password" placeholder="••••••••"/></div>
+      <button class="btn pri" style="width:100%;padding:13px" id="signIn">Sign in</button>
+    </div>
+
+    <div id="mfaStep" class="hide">
+      <div class="field"><label>Authenticator code</label>
+        <input id="totp" inputmode="numeric" maxlength="6" placeholder="123456"
+          style="text-align:center;font-size:22px;letter-spacing:.4em"/></div>
+      <button class="btn pri" style="width:100%;padding:13px" id="verify">Verify &amp; sign in</button>
+      <button class="btn" style="width:100%;margin-top:8px;border:none;background:none;color:var(--mut)" id="backToPw">Back to email &amp; password</button>
+    </div>
+
+    <div class="err" id="loginErr"></div>
+  </div>
+</section>
+
+<!-- ============ APP ============ -->
+<div id="app" class="hide">
+  <aside class="glass">
+    <div class="brand" style="padding:6px 8px 18px"><span class="mark">IW</span><span>InizioWeb</span></div>
+    <div class="nav on" data-v="dashboard">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>Dashboard</div>
+    <div class="nav" data-v="email">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m22 2-7 20-4-9-9-4 20-7z"/><path d="M22 2 11 13"/></svg>Email Sending</div>
+    <div class="nav" data-v="inboxes">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="m22 6-10 7L2 6"/></svg>Inboxes</div>
+    <div class="nav" data-v="hosting">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="8" rx="2"/><rect x="2" y="13" width="20" height="8" rx="2"/><path d="M6 7h.01M6 17h.01"/></svg>Hosting Stack</div>
+    <div class="nav" data-v="settings">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Settings</div>
+    <div style="flex:1"></div>
+    <div class="glass" style="padding:12px;border-radius:16px">
+      <div id="who" style="font-size:12.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">—</div>
+      <div class="mut" style="font-size:10.5px">MFA verified</div>
+      <div class="nav" id="signOut" style="margin-top:8px;padding:6px 4px;font-size:12px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/></svg>Sign out</div>
+    </div>
+  </aside>
+
+  <main>
+   <div class="wrap">
+    <!-- DASHBOARD -->
+    <section data-view="dashboard">
+      <div class="glass ov">
+        <h1 class="h1 gtext" style="font-size:38px">Studio overview</h1>
+        <p class="sub">Everything happening across InizioWeb at a glance.</p>
+        <div class="ovchips" id="ovChips"></div>
+      </div>
+      <div class="gauges" id="statCards"></div>
+      <div class="dashgrid">
+        <div class="glass chartcard">
+          <div class="ctitle">Enquiries — last 30 days</div>
+          <canvas id="enqChart"></canvas>
+          <div class="cxaxis"><span>30 DAYS AGO</span><span id="chartWindow">0 in this window</span><span>TODAY</span></div>
+        </div>
+        <div class="glass actcard">
+          <div class="ctitle">Latest activity</div>
+          <div id="activity"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EMAIL SENDING -->
+    <section data-view="email" class="hide">
+      <p class="eyebrow">Broadcast · Gmail API</p><h1 class="h1 gtext">Email Sending</h1>
+      <p class="sub">Pick a template, fill fields, preview the exact render, send.</p>
+      <div class="three" style="margin-top:18px">
+        <div class="glass tlist" id="tplList"></div>
+        <div class="glass compose">
+          <div>
+            <label>Recipients</label>
+            <div class="chips" id="chips"><input id="recipInput" placeholder="Add email + Enter"/></div>
+          </div>
+          <div id="fieldForm"></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
+            <span class="status-msg" id="sendStatus"></span>
+            <div style="display:flex;gap:8px">
+              <button class="btn" id="sendPreviewBtn">Preview to me</button>
+              <button class="btn pri" id="sendBtn">Send</button>
+            </div>
+          </div>
+        </div>
+        <div class="glass preview">
+          <label>Live preview</label>
+          <iframe id="preview" title="preview"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- INBOXES -->
+    <section data-view="inboxes" class="hide">
+      <div style="display:flex;justify-content:space-between;align-items:end">
+        <div><p class="eyebrow">Connected mailboxes</p><h1 class="h1 gtext">Inboxes</h1>
+          <p class="sub">Contact emails and message threads from the InizioWeb site.</p></div>
+        <span class="pill" id="livePill"><span class="dotc" style="background:var(--mut)"></span>Polling</span>
+      </div>
+      <div class="ibx" style="margin-top:18px">
+        <div class="glass msglist" id="msgList"></div>
+        <div class="glass reader" id="reader"><div class="empty">Select a message to preview.</div></div>
+      </div>
+    </section>
+
+    <!-- HOSTING STACK -->
+    <section data-view="hosting" class="hide">
+      <p class="eyebrow">Infrastructure</p><h1 class="h1 gtext">Hosting Stack</h1>
+      <p class="sub">Live status polled from each provider, every 30s.</p>
+      <div class="cards" id="hostSvc" style="margin-top:18px;grid-template-columns:repeat(2,1fr)"></div>
+    </section>
+
+    <!-- SETTINGS -->
+    <section data-view="settings" class="hide">
+      <p class="eyebrow">Configuration</p><h1 class="h1 gtext">Settings</h1>
+      <div class="cards" style="margin-top:18px;grid-template-columns:repeat(2,1fr)">
+        <div class="glass" style="padding:20px">
+          <div class="eyebrow">Admin account</div>
+          <div id="setEmail" style="font-size:16px;font-weight:700;margin-top:8px">—</div>
+          <div class="mut" style="font-size:12.5px;margin-top:8px">Two-factor: <span id="setMfa" style="color:var(--txt)">—</span></div>
+        </div>
+        <div class="glass" style="padding:20px">
+          <div class="eyebrow">Gmail sending account</div>
+          <div id="gmailAcct" style="font-size:15px;font-weight:700;margin-top:8px">Not connected</div>
+          <div style="display:flex;gap:8px;margin-top:12px">
+            <button class="btn pri" id="gmailConnect">Connect Gmail</button>
+            <button class="btn danger hide" id="gmailDisconnect">Disconnect</button>
+          </div>
+        </div>
+        <div class="glass" style="padding:20px;grid-column:1/-1">
+          <div class="eyebrow">Admin roster</div>
+          <div id="roster" style="margin-top:10px"></div>
+        </div>
+      </div>
+    </section>
+   </div>
+  </main>
+</div>
+
+<script type="module">
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+/* Public config — anon key is safe client-side; Supabase RLS enforces admin access. */
+const SUPABASE_URL  = "https://dlbkgkgnpjbqqelfomjl.supabase.co";
+const SUPABASE_ANON = "sb_publishable_LMR9-jca2kIkoYZmh3yWOg_77Vm0vac";
+const sb = createClient(SUPABASE_URL, SUPABASE_ANON);
+const gmail = window.inizio; // preload bridge (Gmail send via Electron main)
+
+const $  = s => document.querySelector(s);
+const $$ = s => document.querySelectorAll(s);
+const err = m => $("#loginErr").textContent = m || "";
+let mfaFactor = null;
+
+/* ================= AUTH (reuses InizioWeb Supabase auth) ================= */
+$("#signIn").onclick = async () => {
+  err(""); const email = $("#email").value.trim(), password = $("#pw").value;
+  if(!email||!password) return err("Enter email and password.");
+  $("#signIn").textContent = "Checking…";
+  const { error } = await sb.auth.signInWithPassword({ email, password });
+  $("#signIn").textContent = "Sign in";
+  if(error) return err(error.message);
+  await gate();
+};
+$("#verify").onclick = async () => {
+  err(""); const code = $("#totp").value.trim();
+  if(!mfaFactor) return err("No authenticator enrolled.");
+  const { error } = await sb.auth.mfa.challengeAndVerify({ factorId: mfaFactor, code });
+  if(error) return err(error.message);
+  await gate();
+};
+$("#backToPw").onclick = () => { $("#mfaStep").classList.add("hide"); $("#pwStep").classList.remove("hide"); err(""); };
+$("#totp").addEventListener("keydown", e => { if(e.key==="Enter") $("#verify").click(); });
+$("#pw").addEventListener("keydown", e => { if(e.key==="Enter") $("#signIn").click(); });
+
+async function gate(){
+  const { data: aal } = await sb.auth.mfa.getAuthenticatorAssuranceLevel();
+  if(aal && aal.nextLevel === "aal2" && aal.currentLevel !== "aal2"){
+    const { data: f } = await sb.auth.mfa.listFactors();
+    const v = (f?.totp||[]).find(x=>x.status==="verified");
+    if(v){ mfaFactor = v.id; $("#pwStep").classList.add("hide"); $("#mfaStep").classList.remove("hide"); return; }
+  }
+  const { data:{ session } } = await sb.auth.getSession();
+  if(!session) return err("No session.");
+  enterApp(session);
+}
+$("#signOut").onclick = async () => { await sb.auth.signOut(); location.reload(); };
+
+function enterApp(session){
+  $("#login").classList.add("hide");
+  $("#app").classList.remove("hide");
+  $("#who").textContent = session.user.email;
+  $("#setEmail").textContent = session.user.email;
+  loadAll(); startHero(); loadStatuses(); loadTemplates(); loadSettings();
+}
+
+/* nav */
+$$(".nav[data-v]").forEach(n => n.onclick = () => {
+  $$(".nav[data-v]").forEach(x=>x.classList.remove("on"));
+  n.classList.add("on");
+  $$("section[data-view]").forEach(s=>s.classList.add("hide"));
+  const s = $(`section[data-view="${n.dataset.v}"]`);
+  s.classList.remove("hide"); s.classList.add("fade");
+  setTimeout(()=>s.classList.remove("fade"),500);
+});
+
+/* ================= ENQUIRY / INBOX DATA ================= */
+const esc = s => (s||"").toString().replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+const fmt = d => d? new Date(d).toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"}):"—";
+const stClass = s => s.includes("paid")||s==="complete"?"paid":s==="live"?"live":s==="rejected"?"rejected":
+  s.includes("review")||s.includes("required")?"review":s==="received"?"received":"default";
+const pick=(r,...k)=>{for(const x of k){if(r[x]!=null&&r[x]!=="")return r[x];}return"";};
+function normalize(r){return{
+  id:r.id,name:pick(r,"name","customer_name"),business:pick(r,"business_name","business"),
+  email:pick(r,"email"),phone:pick(r,"phone"),pkg:pick(r,"package_interest","package"),
+  venue:pick(r,"venue_type","type"),budget:pick(r,"budget"),message:pick(r,"message"),
+  status:(pick(r,"status")||"received").toString().toLowerCase(),
+  notes:pick(r,"internal_notes","admin_notes"),created:r.created_at,
+  messages:Array.isArray(r.messages)?r.messages:[],read:false,raw:r };}
+
+let CACHE=[], selectedId=null;
+async function fetchEnquiries(){
+  for(const t of ["inquiries","enquiries"]){
+    const { data, error } = await sb.from(t).select("*").order("created_at",{ascending:false}).limit(500);
+    if(!error && data) return data.map(normalize);
+  }
+  return null;
+}
+
+async function loadAll(){
+  $("#statCards").innerHTML='<span class="spin"></span>';
+  $("#msgList").innerHTML='<span class="spin"></span>';
+  const rows = await fetchEnquiries();
+  if(rows===null){
+    const e='<div class="empty">Couldn\'t read enquiries — admin RLS access may be required.</div>';
+    $("#statCards").innerHTML=""; $("#msgList").innerHTML=e; return;
+  }
+  CACHE=rows; renderStats(rows); renderInbox(rows);
+  subscribeRealtime();
+}
+
+function ring(frac,color){
+  const r=24,c=2*Math.PI*r,off=c*(1-Math.max(0,Math.min(1,frac)));
+  return `<svg class="ring" viewBox="0 0 56 56">
+    <circle cx="28" cy="28" r="24" fill="none" stroke="var(--line2)" stroke-width="4"/>
+    ${frac>0
+      ? `<circle cx="28" cy="28" r="24" fill="none" stroke="${color}" stroke-width="4" stroke-linecap="round"
+           stroke-dasharray="${c}" stroke-dashoffset="${off}" transform="rotate(-90 28 28)"/>`
+      : `<circle cx="46" cy="18" r="3.4" fill="${color}"/>`}</svg>`;
+}
+function ago(d){ if(!d) return ""; const s=(Date.now()-new Date(d))/1000;
+  if(s<3600) return Math.max(1,Math.round(s/60))+"m ago";
+  if(s<86400) return Math.round(s/3600)+"h ago"; return Math.round(s/86400)+"d ago"; }
+
+function renderStats(rows){
+  const total=rows.length;
+  const nw=rows.filter(r=>["received","new","under_review"].includes(r.status)).length;
+  const aw=rows.filter(r=>/await|deposit|invoice|payment|approved/.test(r.status)).length;
+  const dm=rows.filter(r=>r.status==="demo"||r.raw?.is_demo||r.raw?.featured).length;
+
+  $("#ovChips").innerHTML=[["enquiries",total],["new",nw],["awaiting payment",aw],["demos",dm]]
+    .map(([l,n])=>`<span class="ovchip"><b>${n}</b> ${l}</span>`).join("");
+
+  const cards=[
+    {n:total,l:"Total enquiries",frac:1,color:"var(--accent)"},
+    {n:nw,l:"New",frac:total?nw/total:0,color:"#7aa2ff"},
+    {n:aw,l:"Awaiting payment",frac:total?aw/total:0,color:"var(--accent2)"},
+    {n:dm,l:"Demos",foot:dm+" featured in hero",frac:0,color:"var(--ok)"},
+  ];
+  $("#statCards").innerHTML=cards.map(c=>`<div class="glass gauge">
+    <div><div class="n">${c.n}</div><div class="l">${c.l}</div>${c.foot?`<div class="sfoot">${c.foot}</div>`:""}</div>
+    ${ring(c.frac,c.color)}</div>`).join("");
+
+  drawChart(rows); renderActivity(rows);
+}
+
+function drawChart(rows){
+  const cv=$("#enqChart"); if(!cv) return;
+  const DPR=Math.min(2,devicePixelRatio||1),W=cv.clientWidth||600,H=cv.clientHeight||220;
+  cv.width=W*DPR; cv.height=H*DPR; const x=cv.getContext("2d"); x.setTransform(DPR,0,0,DPR,0,0); x.clearRect(0,0,W,H);
+  const days=30,now=new Date(); now.setHours(0,0,0,0);
+  const b=new Array(days).fill(0); let win=0;
+  rows.forEach(r=>{ if(!r.created) return; const d=new Date(r.created); d.setHours(0,0,0,0);
+    const i=days-1-Math.round((now-d)/86400000); if(i>=0&&i<days){ b[i]++; win++; } });
+  $("#chartWindow").textContent=win+" in this window";
+  const max=Math.max(1,...b),pad=6;
+  const px=i=>pad+(W-2*pad)*(i/(days-1)), py=v=>H-pad-(H-2*pad)*(v/max);
+  x.beginPath(); x.moveTo(px(0),py(b[0])); for(let i=1;i<days;i++) x.lineTo(px(i),py(b[i]));
+  x.strokeStyle="#e0c485"; x.lineWidth=2.2; x.lineJoin="round"; x.stroke();
+  x.lineTo(px(days-1),H-pad); x.lineTo(px(0),H-pad); x.closePath();
+  const g=x.createLinearGradient(0,0,0,H);
+  g.addColorStop(0,"oklch(0.86 0.085 88 / 22%)"); g.addColorStop(1,"oklch(0.86 0.085 88 / 0%)");
+  x.fillStyle=g; x.fill();
+}
+
+function renderActivity(rows){
+  const ini=s=>((s||"?").trim().split(/\s+/).map(w=>w[0]).join("").slice(0,2)||"?").toUpperCase();
+  const kind=st=>/approv|paid|live|complete/.test(st)?"approved":/reject|declin|block/.test(st)?"rejected":"default";
+  const lbl=st=>{const k=kind(st);return k==="approved"?"Approved":k==="rejected"?"Rejected":st.replace(/_/g," ");};
+  const recent=[...rows].sort((a,b)=>new Date(b.created)-new Date(a.created)).slice(0,5);
+  $("#activity").innerHTML=recent.length? recent.map(r=>{
+    const nm=(r.name||r.business||r.email||"—")+(r.business&&r.name?" · "+r.business:"");
+    return `<div class="actrow"><div class="av">${ini(r.name||r.business||r.email)}</div>
+      <div class="actmeta"><div class="actname">${esc(nm)}</div><div class="acttime">${ago(r.created)}</div></div>
+      <span class="badge ${kind(r.status)}">${esc(lbl(r.status))}</span></div>`; }).join("")
+    : '<div class="empty">No activity yet.</div>';
+}
+
+function renderInbox(rows){
+  const list=$("#msgList");
+  const withEmail=rows.filter(r=>r.email);
+  if(!withEmail.length){ list.innerHTML='<div class="empty">No contact emails yet.</div>'; return; }
+  list.innerHTML=withEmail.map(r=>`
+    <button class="mcard ${selectedId===String(r.id)?'on':''}" data-id="${r.id}">
+      <div class="r1"><span class="nm">${esc(r.name)||esc(r.business)||"—"}</span>
+        ${r.read?'':'<span class="unread"></span>'}</div>
+      <div class="sj">${esc(r.pkg?('['+r.pkg+'] '):'')}${esc(r.business)||esc(r.email)}</div>
+      <div class="pv">${esc(r.message)||"No message"}</div>
+    </button>`).join("");
+  list.querySelectorAll(".mcard").forEach(b=>b.onclick=()=>openMsg(b.dataset.id));
+}
+
+function openMsg(id){
+  const r=CACHE.find(x=>String(x.id)===String(id)); if(!r) return;
+  selectedId=String(id); r.read=true;
+  renderInbox(CACHE);
+  const thread=r.messages.map(m=>`<div class="msg ${m.senderType==="admin"?"admin":""}">
+    <b>${esc(m.senderName||m.senderType||"")}</b> <span class="mut" style="font-size:11px">${m.createdAt?fmt(m.createdAt):""}</span>
+    <div style="margin-top:5px">${esc(m.message)}</div></div>`).join("");
+  $("#reader").innerHTML=`
+    <div style="display:flex;justify-content:space-between;align-items:start;gap:10px">
+      <div><div style="font-size:19px;font-weight:800">${esc(r.name)||"Enquiry"}</div>
+        <div class="mut" style="font-size:13px">${esc(r.email)}</div></div>
+      <span class="st ${stClass(r.status)}">${esc(r.status.replace(/_/g," "))}</span>
+    </div>
+    <div class="kv">
+      <div class="k">Business</div><div>${esc(r.business)||"—"}</div>
+      <div class="k">Phone</div><div>${esc(r.phone)||"—"}</div>
+      <div class="k">Package</div><div>${esc(r.pkg)||"—"}</div>
+      <div class="k">Venue</div><div>${esc(r.venue)||"—"}</div>
+      <div class="k">Budget</div><div>${esc(r.budget)||"—"}</div>
+      <div class="k">Received</div><div>${fmt(r.created)}</div>
+    </div>
+    ${r.message?`<div style="margin-top:18px"><label>Message</label><div class="msg">${esc(r.message)}</div></div>`:""}
+    ${r.notes?`<div style="margin-top:14px"><label>Internal notes</label><div class="msg">${esc(r.notes)}</div></div>`:""}
+    ${thread?`<div style="margin-top:18px"><label>Thread</label>${thread}</div>`:""}
+    <div style="margin-top:20px;display:flex;gap:10px">
+      <a class="btn pri" href="mailto:${esc(r.email)}">Reply by email</a>
+    </div>`;
+}
+
+function subscribeRealtime(){
+  sb.channel("enquiries_rt")
+    .on("postgres_changes",{event:"*",schema:"public",table:"inquiries"},async ()=>{
+      const pill=$("#livePill"); pill.innerHTML='<span class="dotc" style="background:var(--ok)"></span>Live';
+      const rows=await fetchEnquiries(); if(rows){CACHE=rows;renderStats(rows);renderInbox(rows);}
+    }).subscribe();
+}
+
+/* ================= EMAIL SENDING (Gmail via Electron) ================= */
+let templates=[], current=null, recipients=[];
+async function loadTemplates(){
+  try{ const t=await gmail.loadTemplates(); templates=Array.isArray(t)?t:(t.templates||[]); }catch(_){ templates=[]; }
+  const list=$("#tplList");
+  if(!templates.length){ list.innerHTML='<div class="empty" style="padding:20px">No templates.</div>'; return; }
+  list.innerHTML=templates.map((t,i)=>`<button class="titem ${i===0?'on':''}" data-i="${i}">${esc(t.name)}</button>`).join("");
+  list.querySelectorAll(".titem").forEach(b=>b.onclick=()=>{
+    list.querySelectorAll(".titem").forEach(x=>x.classList.remove("on")); b.classList.add("on");
+    openTemplate(templates[+b.dataset.i]); });
+  openTemplate(templates[0]);
+}
+function fillHtml(str,v){return str.replace(/\{\{\s*(\w+)\s*\}\}/g,(_,k)=>{
+  const val=v[k]; return (val===undefined||val==='')?`<span style="opacity:.35">${k.replace(/_/g,' ')}</span>`:esc(val);});}
+function fillPlain(str,v){return str.replace(/\{\{\s*(\w+)\s*\}\}/g,(_,k)=>v[k]||'');}
+function values(){const o={};if(!current)return o;(current.fields||[]).forEach(f=>{
+  const el=$("#f_"+f.key);const raw=el?el.value:'';o[f.key]=(raw===''&&f.default!==undefined)?f.default:raw;});return o;}
+function renderPreview(){ if(current) $("#preview").srcdoc=fillHtml(current.html,values()); }
+function openTemplate(tpl){
+  current=tpl; const form=$("#fieldForm"); form.innerHTML='';
+  (tpl.fields||[]).forEach(f=>{
+    const wrap=document.createElement('div'); wrap.style.margin='0 0 10px';
+    const lb=document.createElement('label'); lb.textContent=f.label; lb.setAttribute('for','f_'+f.key);
+    const inp=f.type==='textarea'?document.createElement('textarea'):document.createElement('input');
+    inp.id='f_'+f.key; if(f.type==='textarea')inp.rows=3; if(f.placeholder)inp.placeholder=f.placeholder;
+    inp.addEventListener('input',renderPreview); wrap.appendChild(lb); wrap.appendChild(inp); form.appendChild(wrap);
+  });
+  renderPreview();
+}
+/* recipient chips */
+function renderChips(){
+  const box=$("#chips"); box.querySelectorAll(".chip").forEach(c=>c.remove());
+  recipients.forEach(r=>{
+    const c=document.createElement('span'); c.className='chip';
+    c.innerHTML=`${esc(r)} <button data-r="${esc(r)}">×</button>`;
+    c.querySelector('button').onclick=()=>{recipients=recipients.filter(x=>x!==r);renderChips();};
+    box.insertBefore(c,$("#recipInput"));
+  });
+}
+$("#recipInput").addEventListener("keydown",e=>{
+  if(e.key==="Enter"||e.key===","){e.preventDefault();const v=e.target.value.trim();
+    if(/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)&&!recipients.includes(v)){recipients.push(v);e.target.value='';renderChips();}}});
+function setSend(m,k){const s=$("#sendStatus");s.textContent=m;s.className='status-msg'+(k?' '+k:'');}
+
+async function doSend(mode){
+  const st=await gmail.authStatus();
+  if(!st.connected){ const c=await gmail.connect(); if(!c.ok){setSend("Connect Gmail in Settings first.","err");return;} }
+  const me=(await gmail.authStatus()).email;
+  const to = mode==='preview'? [me] : recipients;
+  if(!to.length){ setSend("Add at least one recipient.","err"); return; }
+  const v=values(); const html=fillPlain(current.html,v); const subject=fillPlain(current.subject||current.name,v);
+  $("#sendBtn").disabled=$("#sendPreviewBtn").disabled=true;
+  setSend(mode==='preview'?"Sending test to yourself…":`Sending to ${to.length}…`,"info");
+  let ok=0,fail=0;
+  for(const addr of to){ const r=await gmail.send({to:addr,subject,html}); r.ok?ok++:fail++; }
+  $("#sendBtn").disabled=$("#sendPreviewBtn").disabled=false;
+  setSend(`Done · ${ok} sent${fail?`, ${fail} failed`:''} ✓`, fail?"err":"ok");
+}
+$("#sendBtn").onclick=()=>doSend('send');
+$("#sendPreviewBtn").onclick=()=>doSend('preview');
+
+/* ================= HOSTING STACK (live status) ================= */
+const SERVICES=[
+  {key:"cloudflare",name:"Cloudflare",role:"Edge · CDN · DNS",brand:"#f6821f",url:"https://www.cloudflarestatus.com/api/v2/status.json"},
+  {key:"resend",name:"Resend",role:"Transactional email",brand:"#e8e8ef",url:"https://status.resend.com/api/v2/status.json"},
+  {key:"supabase",name:"Supabase",role:"Auth · DB · Realtime",brand:"#3ecf8e",url:"https://status.supabase.com/api/v2/status.json"},
+  {key:"gmail",name:"Gmail API",role:"Mail · Identity",brand:"#e0c485",url:null},
+];
+const SC={operational:"#3ddc97",degraded:"#f5b950",outage:"#ff6b6b",unknown:"#8b8fa3"};
+const SL={operational:"Operational",degraded:"Degraded",outage:"Outage",unknown:"No signal"};
+let STATUS={};
+function mapInd(i){return i==="none"?"operational":(i==="minor"||i==="maintenance")?"degraded":i?"outage":"unknown";}
+async function pingService(svc){
+  if(svc.key==="gmail"){ try{const s=await gmail.authStatus();
+    return {state:s.connected?"operational":"unknown",desc:s.connected?`Connected · ${s.email}`:"Not connected",ms:null};}catch{return{state:"unknown",desc:"—",ms:null};} }
+  try{ const t0=performance.now();
+    const res=await fetch(svc.url,{signal:AbortSignal.timeout(9000)}); const ms=Math.round(performance.now()-t0);
+    const j=await res.json(); return {state:mapInd(j.status?.indicator??"unknown"),desc:j.status?.description??"Status feed online",ms};
+  }catch{ return {state:"unknown",desc:"Status feed unreachable",ms:null}; }
+}
+async function loadStatuses(){
+  const results=await Promise.all(SERVICES.map(pingService));
+  SERVICES.forEach((s,i)=>STATUS[s.key]=results[i]);
+  renderSvc($("#dashSvc")); renderSvc($("#hostSvc"),true);
+}
+function renderSvc(box,full){
+  if(!box) return;
+  box.innerHTML=SERVICES.map(svc=>{const st=STATUS[svc.key]||{state:"unknown"};const c=SC[st.state];
+    return `<div class="glass svc">
+      <div class="top"><div class="nm"><span class="dotc" style="background:${svc.brand};box-shadow:0 0 12px ${svc.brand}"></span>${svc.name}</div>
+        <span class="stpill" style="color:${c};background:${c}14;border:1px solid ${c}44">${SL[st.state]}</span></div>
+      <div class="role">${svc.role}</div>
+      ${full?`<div class="desc">${esc(st.desc||"")}</div>`:''}
+      <div class="meta"><span>${st.ms!=null?st.ms+" ms":"— ms"}</span><span>${full?'live':''}</span></div>
+    </div>`;}).join("");
+}
+setInterval(loadStatuses,30000);
+
+/* ================= 3D HERO ================= */
+function startHero(){
+  const cv=$("#hero"); if(!cv||cv._on) return; cv._on=true;
+  const ctx=cv.getContext("2d"); let raf,t=0,W,H,DPR=Math.min(2,devicePixelRatio||1);
+  const nodes=SERVICES.map((s,i)=>({s,r:120+i*40,tilt:(i%2?-.4:.5),speed:.10+i*.03,phase:i*1.6}));
+  function resize(){W=cv.clientWidth;H=cv.clientHeight;cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);}
+  resize(); addEventListener("resize",resize);
+  function orbit(r,tilt,a){return{x:Math.cos(a)*r,y:Math.sin(a)*r*tilt,z:Math.sin(a)*r};}
+  function proj(p){const f=520/(520+p.z);return{x:W/2+p.x*f,y:H/2+p.y*f,s:f};}
+  function draw(){
+    t+=0.006; ctx.clearRect(0,0,W,H);
+    const cx=W/2,cy=H/2;
+    // core
+    const g=ctx.createRadialGradient(cx,cy,0,cx,cy,46);
+    g.addColorStop(0,"#f7eccf");g.addColorStop(.5,"#e0c485");g.addColorStop(1,"rgba(224,196,133,0)");
+    ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,cy,46,0,7);ctx.fill();
+    ctx.fillStyle="#d3ab6b";ctx.beginPath();ctx.arc(cx,cy,14,0,7);ctx.fill();
+    const list=nodes.map(n=>{const a=t*n.speed*6+n.phase;const p=proj(orbit(n.r,n.tilt,a));return{n,p,z:Math.sin(a)*n.r};})
+      .sort((a,b)=>b.z-a.z);
+    for(const {n,p} of list){
+      const st=STATUS[n.s.key]||{state:"unknown"}; const c=SC[st.state]; const r=11*p.s;
+      // beam
+      const lg=ctx.createLinearGradient(cx,cy,p.x,p.y);
+      lg.addColorStop(0,"rgba(224,196,133,.06)");lg.addColorStop(1,c+"55");
+      ctx.strokeStyle=lg;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(p.x,p.y);ctx.stroke();
+      // pulse
+      const pt=(t*3+n.phase)%1;ctx.fillStyle=c;ctx.beginPath();
+      ctx.arc(cx+(p.x-cx)*pt,cy+(p.y-cy)*pt,1.8*p.s,0,7);ctx.fill();
+      // glow+body
+      const ng=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,r*3);ng.addColorStop(0,c+"66");ng.addColorStop(1,c+"00");
+      ctx.fillStyle=ng;ctx.beginPath();ctx.arc(p.x,p.y,r*3,0,7);ctx.fill();
+      ctx.fillStyle="#0b0b12";ctx.strokeStyle=c;ctx.lineWidth=1.6*p.s;
+      ctx.beginPath();ctx.arc(p.x,p.y,r,0,7);ctx.fill();ctx.stroke();
+      ctx.fillStyle=n.s.brand;ctx.beginPath();ctx.arc(p.x,p.y,r*.42,0,7);ctx.fill();
+      if(p.s>.6){ctx.font=`600 ${Math.round(11*p.s)}px Sora,sans-serif`;ctx.textAlign="center";
+        ctx.fillStyle="rgba(244,245,251,.9)";ctx.fillText(n.s.name,p.x,p.y-r-9*p.s);}
+    }
+    raf=requestAnimationFrame(draw);
+  }
+  raf=requestAnimationFrame(draw);
+}
+
+/* ================= SETTINGS ================= */
+async function loadSettings(){
+  // MFA
+  try{ const {data:f}=await sb.auth.mfa.listFactors();
+    $("#setMfa").textContent=(f?.totp||[]).some(x=>x.status==="verified")?"Enrolled":"Not enrolled"; }catch{}
+  // Gmail
+  refreshGmail();
+  // roster
+  const {data}=await sb.from("admin_users").select("email, role");
+  const rows=data||[];
+  $("#roster").innerHTML=rows.length? rows.map(r=>
+    `<div style="display:flex;justify-content:space-between;padding:8px 2px;border-bottom:1px solid var(--line);font-size:13.5px">
+      <span>${esc(r.email)}</span><span class="mut">${esc(r.role)}</span></div>`).join("")
+    : '<div class="mut" style="font-size:13px">No roster rows readable.</div>';
+}
+async function refreshGmail(){
+  const s=await gmail.authStatus();
+  $("#gmailAcct").textContent=s.connected?s.email:"Not connected";
+  $("#gmailConnect").classList.toggle("hide",s.connected);
+  $("#gmailDisconnect").classList.toggle("hide",!s.connected);
+}
+$("#gmailConnect").onclick=async()=>{ $("#gmailConnect").textContent="Connecting…";
+  await gmail.connect(); $("#gmailConnect").textContent="Connect Gmail"; refreshGmail(); loadStatuses(); };
+$("#gmailDisconnect").onclick=async()=>{ await gmail.disconnect(); refreshGmail(); loadStatuses(); };
+
+/* auto-resume */
+(async()=>{ const { data:{ session } } = await sb.auth.getSession(); if(session) await gate(); })();
+</script>
+</body>
+</html>

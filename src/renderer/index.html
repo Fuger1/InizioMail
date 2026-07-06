@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>InizioMail</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Top bar -->
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">◆</span>
+      <span class="brand-name">InizioMail</span>
+      <span class="brand-eyebrow">by InizioWeb</span>
+    </div>
+    <div class="account" id="account">
+      <span class="dot" id="statusDot"></span>
+      <span id="accountLabel">Not connected</span>
+      <button class="ghost-btn" id="connectBtn">Connect Gmail</button>
+    </div>
+  </header>
+
+  <!-- STEP 1: template grid -->
+  <section class="view" id="view-templates">
+    <div class="view-head">
+      <p class="eyebrow">Hospitality web design studio</p>
+      <h1>Choose a template</h1>
+      <p>Pick a premium email, fill the fields, send in seconds.</p>
+    </div>
+    <div class="grid" id="templateGrid"></div>
+  </section>
+
+  <!-- STEP 2/3: editor + preview -->
+  <section class="view hidden" id="view-editor">
+    <div class="editor-head">
+      <button class="ghost-btn" id="backBtn">← Templates</button>
+      <h2 id="editorTitle"></h2>
+    </div>
+    <div class="editor-split">
+      <div class="form-pane">
+        <div class="field">
+          <label for="subjectInput">Email Subject</label>
+          <input id="subjectInput" type="text" placeholder="Email subject line" />
+        </div>
+        <form id="fieldForm" autocomplete="off"></form>
+        <div class="send-row">
+          <label class="toggle">
+            <input type="checkbox" id="skipPreview" />
+            <span>Skip preview, send instantly</span>
+          </label>
+          <div class="recipient-block">
+            <label for="recipient">Send to</label>
+            <input type="email" id="recipient" placeholder="recipient@company.com" />
+          </div>
+          <div class="btn-row">
+            <button class="btn secondary" id="sendPreviewBtn">Send Preview to Me</button>
+            <button class="btn primary" id="sendBtn">Send Email</button>
+          </div>
+          <p class="status-msg" id="sendStatus"></p>
+        </div>
+      </div>
+      <div class="preview-pane">
+        <div class="preview-label">Live preview</div>
+        <iframe id="preview" title="preview"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <script src="renderer.js"></script>
+</body>
+</html>

@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>InizioWeb · Admin</title>
+<style>
+  :root{
+    --bg:#07080c; --bg2:#0b0e17; --panel:rgba(20,24,36,.62); --panel2:rgba(28,33,48,.55);
+    --line:rgba(255,255,255,.08); --line2:rgba(255,255,255,.14);
+    --txt:#eef1f8; --mut:#98a0b6; --gold:#e9c877; --gold2:#c8a24a;
+    --grn:#5bd6a0; --amb:#f0b24b; --red:#f2727c; --blu:#7aa2ff;
+    --shadow:0 20px 60px -20px rgba(0,0,0,.7);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{
+    font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    color:var(--txt);background:
+      radial-gradient(1100px 600px at 78% -8%,rgba(233,200,119,.10),transparent 55%),
+      radial-gradient(900px 700px at 8% 110%,rgba(122,162,255,.08),transparent 55%),
+      linear-gradient(180deg,var(--bg2),var(--bg));
+    min-height:100%;overflow-x:hidden;
+  }
+  a{color:inherit}
+  .glass{background:var(--panel);border:1px solid var(--line);border-radius:18px;
+    backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:var(--shadow)}
+  .hide{display:none!important}
+  .mut{color:var(--mut)}
+  .pill{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;
+    font-size:11px;font-weight:600;letter-spacing:.3px;border:1px solid var(--line2);background:rgba(255,255,255,.04)}
+  .gold{color:var(--gold)}
+  button{font-family:inherit;cursor:pointer}
+  .btn{border:1px solid var(--line2);background:rgba(255,255,255,.05);color:var(--txt);
+    padding:10px 16px;border-radius:12px;font-weight:600;font-size:13px;transition:.15s}
+  .btn:hover{background:rgba(255,255,255,.1)}
+  .btn.pri{background:linear-gradient(180deg,var(--gold),var(--gold2));color:#1a1408;border:none}
+  .btn.pri:hover{filter:brightness(1.06)}
+  input{font-family:inherit;width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--line2);
+    background:rgba(255,255,255,.03);color:var(--txt);font-size:14px;outline:none}
+  input:focus{border-color:var(--gold2);box-shadow:0 0 0 3px rgba(233,200,119,.12)}
+  label{font-size:12px;color:var(--mut);font-weight:600;display:block;margin:0 0 6px 2px}
+
+  /* LOGIN — 3D HERO */
+  #login{min-height:100vh;display:grid;grid-template-columns:1.15fr .85fr;overflow:hidden}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.5px}
+  .brand .dot{width:30px;height:30px;border-radius:9px;background:linear-gradient(150deg,var(--gold),var(--gold2));
+    display:grid;place-items:center;color:#1a1408;font-weight:900}
+  .field{margin:16px 0}
+  .err{color:var(--red);font-size:13px;margin-top:12px;min-height:16px}
+
+  /* left hero stage */
+  .stage{position:relative;display:grid;place-items:center;overflow:hidden;
+    background:
+      radial-gradient(700px 500px at 30% 20%,rgba(233,200,119,.14),transparent 60%),
+      radial-gradient(600px 600px at 75% 90%,rgba(122,162,255,.10),transparent 60%),
+      linear-gradient(150deg,#0a0c14,#06070c);}
+  #fx{position:absolute;inset:0;width:100%;height:100%}
+  .stageCopy{position:absolute;left:52px;bottom:44px;z-index:5;max-width:440px}
+  .stageCopy h2{font-size:30px;line-height:1.15;font-weight:800;margin:14px 0 10px;
+    background:linear-gradient(120deg,#fff 30%,var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .stageCopy p{color:var(--mut);font-size:14px;margin:0;line-height:1.6}
+  .glowline{display:flex;gap:16px;margin-top:20px}
+  .glowline .g{font-size:11px;color:var(--mut);font-weight:600;display:flex;align-items:center;gap:6px}
+  .glowline .g::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 10px var(--gold)}
+
+  /* 3D scene */
+  .scene{perspective:1100px;width:280px;height:280px;position:relative;z-index:3;
+    animation:floaty 7s ease-in-out infinite}
+  @keyframes floaty{0%,100%{transform:translateY(-10px)}50%{transform:translateY(12px)}}
+  .cube{position:absolute;inset:0;transform-style:preserve-3d;animation:spin 18s linear infinite}
+  @keyframes spin{from{transform:rotateX(-22deg) rotateY(0)}to{transform:rotateX(-22deg) rotateY(360deg)}}
+  .face{position:absolute;inset:0;display:grid;place-items:center;border:1px solid rgba(233,200,119,.35);
+    border-radius:22px;background:linear-gradient(150deg,rgba(233,200,119,.12),rgba(20,24,36,.5));
+    backdrop-filter:blur(6px);box-shadow:inset 0 0 40px rgba(233,200,119,.08),0 0 60px -10px rgba(233,200,119,.25);
+    font-weight:900;font-size:56px;color:var(--gold);letter-spacing:1px}
+  .face span{opacity:.9;text-shadow:0 0 24px rgba(233,200,119,.5)}
+  .f1{transform:rotateY(0deg) translateZ(140px)} .f2{transform:rotateY(90deg) translateZ(140px)}
+  .f3{transform:rotateY(180deg) translateZ(140px)} .f4{transform:rotateY(270deg) translateZ(140px)}
+  .f5{transform:rotateX(90deg) translateZ(140px)} .f6{transform:rotateX(-90deg) translateZ(140px)}
+  .ring{position:absolute;top:50%;left:50%;border:1px solid rgba(233,200,119,.18);border-radius:50%;
+    transform-style:preserve-3d;z-index:2}
+  .r1{width:420px;height:420px;margin:-210px 0 0 -210px;animation:ring1 22s linear infinite}
+  .r2{width:520px;height:520px;margin:-260px 0 0 -260px;border-color:rgba(122,162,255,.16);animation:ring2 30s linear infinite}
+  @keyframes ring1{from{transform:rotateX(72deg) rotateZ(0)}to{transform:rotateX(72deg) rotateZ(360deg)}}
+  @keyframes ring2{from{transform:rotateX(60deg) rotateZ(0)}to{transform:rotateX(60deg) rotateZ(-360deg)}}
+
+  /* right form column */
+  .formcol{display:grid;place-items:center;padding:24px;position:relative}
+  .lcard{width:100%;max-width:400px;padding:38px 34px;position:relative;z-index:2}
+  @media(max-width:860px){
+    #login{grid-template-columns:1fr}
+    .stage{display:none}
+    .formcol{min-height:100vh}
+  }
+
+  /* APP */
+  #app{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+  aside{padding:22px 16px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:6px;
+    background:rgba(10,12,20,.5);backdrop-filter:blur(10px)}
+  .nav{display:flex;align-items:center;gap:11px;padding:11px 13px;border-radius:12px;color:var(--mut);
+    font-weight:600;font-size:14px;border:1px solid transparent}
+  .nav:hover{color:var(--txt);background:rgba(255,255,255,.04)}
+  .nav.on{color:var(--txt);background:rgba(233,200,119,.10);border-color:rgba(233,200,119,.22)}
+  .nav svg{width:18px;height:18px;flex:none}
+  main{padding:30px 34px;max-width:1180px}
+  .h1{font-size:24px;font-weight:800;margin:0}
+  .sub{color:var(--mut);font-size:14px;margin:4px 0 0}
+  .grid{display:grid;gap:16px}
+  .stats{grid-template-columns:repeat(4,1fr);margin:22px 0}
+  .stat{padding:18px}
+  .stat .n{font-size:28px;font-weight:800;margin:6px 0 2px}
+  .stat .l{font-size:12px;color:var(--mut);font-weight:600}
+  @media(max-width:900px){#app{grid-template-columns:1fr}aside{flex-direction:row;overflow-x:auto;border-right:none;border-bottom:1px solid var(--line)}.stats{grid-template-columns:repeat(2,1fr)}}
+
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th{text-align:left;color:var(--mut);font-weight:600;font-size:11px;letter-spacing:.4px;text-transform:uppercase;
+    padding:12px 14px;border-bottom:1px solid var(--line)}
+  td{padding:13px 14px;border-bottom:1px solid var(--line)}
+  tr.row{cursor:pointer;transition:.12s}
+  tr.row:hover td{background:rgba(255,255,255,.03)}
+  .st{font-size:10.5px;padding:3px 9px;border-radius:999px;font-weight:700;text-transform:capitalize;letter-spacing:.2px}
+  .st.received{background:rgba(122,162,255,.15);color:var(--blu)}
+  .st.review{background:rgba(240,178,75,.15);color:var(--amb)}
+  .st.paid{background:rgba(91,214,160,.15);color:var(--grn)}
+  .st.live{background:rgba(91,214,160,.18);color:var(--grn)}
+  .st.rejected{background:rgba(242,114,124,.15);color:var(--red)}
+  .st.default{background:rgba(255,255,255,.08);color:var(--mut)}
+
+  /* drawer */
+  #drawer{position:fixed;inset:0;background:rgba(3,5,10,.55);backdrop-filter:blur(3px);z-index:40;display:none}
+  #drawer.on{display:block}
+  .dpanel{position:absolute;right:0;top:0;height:100%;width:min(560px,94vw);padding:28px;overflow-y:auto;
+    border-radius:22px 0 0 22px;border-left:1px solid var(--line2)}
+  .kv{display:grid;grid-template-columns:130px 1fr;gap:6px 14px;font-size:14px;margin-top:18px}
+  .kv .k{color:var(--mut);font-weight:600}
+  .msg{padding:12px 14px;border-radius:12px;border:1px solid var(--line);margin-top:10px;font-size:13.5px}
+  .msg.admin{background:rgba(233,200,119,.06);border-color:rgba(233,200,119,.18)}
+  .spin{width:22px;height:22px;border:2.5px solid rgba(255,255,255,.15);border-top-color:var(--gold);
+    border-radius:50%;animation:sp 1s linear infinite;margin:40px auto;display:block}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  .empty{text-align:center;color:var(--mut);padding:50px 20px;font-size:14px}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<section id="login">
+  <!-- LEFT: 3D HERO STAGE -->
+  <div class="stage">
+    <canvas id="fx"></canvas>
+    <div class="ring r1"></div>
+    <div class="ring r2"></div>
+    <div class="scene">
+      <div class="cube">
+        <div class="face f1"><span>iw</span></div>
+        <div class="face f2"><span>iw</span></div>
+        <div class="face f3"><span>iw</span></div>
+        <div class="face f4"><span>iw</span></div>
+        <div class="face f5"><span>◈</span></div>
+        <div class="face f6"><span>◈</span></div>
+      </div>
+    </div>
+    <div class="stageCopy">
+      <div class="brand"><span class="dot">iw</span> InizioWeb<span class="mut" style="font-weight:600">· Admin</span></div>
+      <h2>The control room for every enquiry, inbox and project.</h2>
+      <p>A unified, dark-glass operating panel — fast switching, role-aware access, every action reversible.</p>
+      <div class="glowline">
+        <span class="g">Supabase auth</span>
+        <span class="g">MFA secured</span>
+        <span class="g">Live sync</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: FORM -->
+  <div class="formcol">
+  <div class="lcard glass">
+    <div class="brand"><span class="dot">iw</span> InizioWeb<span class="mut" style="font-weight:600">· Admin</span></div>
+    <p class="sub" style="margin-top:14px">Secure control room for enquiries, inboxes and projects.</p>
+
+    <div id="pwStep">
+      <div class="field"><label>Email</label><input id="email" type="email" autocomplete="username" placeholder="antonio@inizioweb.co.uk"/></div>
+      <div class="field"><label>Password</label><input id="pw" type="password" autocomplete="current-password" placeholder="••••••••"/></div>
+      <button class="btn pri" style="width:100%" id="signIn">Enter panel</button>
+    </div>
+
+    <div id="mfaStep" class="hide">
+      <div class="field"><label>Authenticator code</label><input id="totp" inputmode="numeric" maxlength="6" placeholder="123456"/></div>
+      <button class="btn pri" style="width:100%" id="verify">Verify</button>
+    </div>
+
+    <div class="err" id="loginErr"></div>
+    <p class="mut" style="font-size:11.5px;margin-top:18px;text-align:center">Access restricted to InizioWeb administrators.</p>
+  </div>
+  </div>
+</section>
+
+<!-- APP -->
+<div id="app" class="hide">
+  <aside>
+    <div class="brand" style="padding:6px 8px 18px"><span class="dot">iw</span> InizioWeb</div>
+    <div class="nav on" data-v="overview">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>Overview</div>
+    <div class="nav" data-v="enquiries">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M4 9h16M9 9v11"/></svg>Enquiries</div>
+    <div class="nav" data-v="inbox">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="m22 6-10 7L2 6"/></svg>Inbox</div>
+    <div style="flex:1"></div>
+    <div class="nav" id="signOut">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/></svg>Sign out</div>
+    <div class="pill" style="justify-content:center" id="who">—</div>
+  </aside>
+
+  <main>
+    <!-- OVERVIEW -->
+    <section data-view="overview">
+      <h1 class="h1">Overview</h1>
+      <p class="sub">Live snapshot of everything flowing through InizioWeb.</p>
+      <div class="grid stats" id="statCards"></div>
+      <div class="glass" style="padding:20px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <b>Latest enquiries</b><span class="pill gold" id="latestCount">—</span>
+        </div>
+        <div id="latestWrap"></div>
+      </div>
+    </section>
+
+    <!-- ENQUIRIES -->
+    <section data-view="enquiries" class="hide">
+      <h1 class="h1">Enquiries</h1>
+      <p class="sub">Every lead, deposit and project stage — click a row for the full record.</p>
+      <div class="glass" style="padding:6px;margin-top:20px">
+        <div id="enqWrap"></div>
+      </div>
+    </section>
+
+    <!-- INBOX -->
+    <section data-view="inbox" class="hide">
+      <h1 class="h1">Inbox</h1>
+      <p class="sub">Contact emails and message threads attached to enquiries.</p>
+      <div class="glass" style="padding:6px;margin-top:20px">
+        <div id="inboxWrap"></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- DRAWER -->
+<div id="drawer"><div class="dpanel glass" id="dpanel"></div></div>
+
+<script type="module">
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+// Public config — pulled straight from your site's .env (anon key is safe in frontends; RLS enforces access).
+const SUPABASE_URL = "https://dlbkgkgnpjbqqelfomjl.supabase.co";
+const SUPABASE_ANON = "sb_publishable_LMR9-jca2kIkoYZmh3yWOg_77Vm0vac";
+const sb = createClient(SUPABASE_URL, SUPABASE_ANON);
+
+const $ = s => document.querySelector(s);
+const err = m => $("#loginErr").textContent = m || "";
+let mfaFactor = null;
+
+/* ---------- AUTH ---------- */
+$("#signIn").onclick = async () => {
+  err(""); const email = $("#email").value.trim(), password = $("#pw").value;
+  if(!email||!password) return err("Enter email and password.");
+  $("#signIn").textContent = "Checking…";
+  const { error } = await sb.auth.signInWithPassword({ email, password });
+  $("#signIn").textContent = "Enter panel";
+  if(error) return err(error.message);
+  await gate();
+};
+$("#verify").onclick = async () => {
+  err(""); const code = $("#totp").value.trim();
+  if(!mfaFactor) return err("No authenticator enrolled.");
+  const { error } = await sb.auth.mfa.challengeAndVerify({ factorId: mfaFactor, code });
+  if(error) return err(error.message);
+  await gate();
+};
+$("#totp").addEventListener("keydown", e => { if(e.key==="Enter") $("#verify").click(); });
+$("#pw").addEventListener("keydown", e => { if(e.key==="Enter") $("#signIn").click(); });
+
+async function gate(){
+  // MFA check
+  const { data: aal } = await sb.auth.mfa.getAuthenticatorAssuranceLevel();
+  if(aal && aal.nextLevel === "aal2" && aal.currentLevel !== "aal2"){
+    const { data: f } = await sb.auth.mfa.listFactors();
+    const v = (f?.totp||[]).find(x=>x.status==="verified");
+    if(v){ mfaFactor = v.id; $("#pwStep").classList.add("hide"); $("#mfaStep").classList.remove("hide"); return; }
+  }
+  const { data:{ session } } = await sb.auth.getSession();
+  if(!session) return err("No session.");
+  enterApp(session);
+}
+$("#signOut").onclick = async () => { await sb.auth.signOut(); location.reload(); };
+
+/* ---------- APP ---------- */
+function enterApp(session){
+  $("#login").classList.add("hide");
+  $("#app").classList.remove("hide");
+  $("#who").textContent = session.user.email;
+  loadAll();
+}
+document.querySelectorAll(".nav[data-v]").forEach(n => n.onclick = () => {
+  document.querySelectorAll(".nav[data-v]").forEach(x=>x.classList.remove("on"));
+  n.classList.add("on");
+  document.querySelectorAll("section[data-view]").forEach(s=>s.classList.add("hide"));
+  $(`section[data-view="${n.dataset.v}"]`).classList.remove("hide");
+});
+
+/* ---------- DATA ---------- */
+// Site uses table "inquiries"; older schema calls it "enquiries". Try both.
+async function fetchEnquiries(){
+  for(const t of ["inquiries","enquiries"]){
+    const { data, error } = await sb.from(t).select("*").order("created_at",{ascending:false}).limit(500);
+    if(!error && data) return data.map(normalize);
+  }
+  return null;
+}
+function pick(r,...k){ for(const x of k){ if(r[x]!=null && r[x]!=="") return r[x]; } return ""; }
+function normalize(r){
+  return {
+    id:r.id,
+    name:pick(r,"name","customer_name"),
+    business:pick(r,"business_name","business"),
+    email:pick(r,"email"),
+    phone:pick(r,"phone"),
+    pkg:pick(r,"package_interest","package"),
+    venue:pick(r,"venue_type","type"),
+    budget:pick(r,"budget"),
+    message:pick(r,"message"),
+    status:(pick(r,"status")||"received").toString().toLowerCase(),
+    notes:pick(r,"internal_notes","admin_notes"),
+    created:r.created_at,
+    messages:Array.isArray(r.messages)?r.messages:[],
+    raw:r
+  };
+}
+let CACHE = [];
+
+async function loadAll(){
+  $("#statCards").innerHTML='<span class="spin"></span>';
+  $("#enqWrap").innerHTML='<span class="spin"></span>';
+  $("#inboxWrap").innerHTML='<span class="spin"></span>';
+  const rows = await fetchEnquiries();
+  if(rows===null){
+    const e='<div class="empty">Couldn\'t read enquiries. Your admin account may need RLS access, or the table name differs.</div>';
+    $("#statCards").innerHTML=""; $("#enqWrap").innerHTML=e; $("#inboxWrap").innerHTML=e; return;
+  }
+  CACHE = rows;
+  renderStats(rows); renderEnquiries(rows); renderInbox(rows); renderLatest(rows);
+}
+
+const stClass = s => s.includes("paid")||s==="complete"?"paid":s==="live"?"live":s==="rejected"?"rejected":
+  s.includes("review")||s.includes("required")?"review":s==="received"?"received":"default";
+const fmt = d => d? new Date(d).toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"}):"—";
+const esc = s => (s||"").toString().replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+
+function renderStats(rows){
+  const total=rows.length;
+  const nw=rows.filter(r=>["received","under_review"].includes(r.status)).length;
+  const paid=rows.filter(r=>r.status.includes("paid")||["live","complete"].includes(r.status)).length;
+  const prices={essential:899.99,signature:2500,concierge:5750};
+  const rev=rows.filter(r=>r.status.includes("paid")||["live","complete"].includes(r.status))
+    .reduce((a,r)=>a+(prices[(r.pkg||"").toLowerCase()]||0),0);
+  const cards=[["Total enquiries",total,"var(--txt)"],["Awaiting review",nw,"var(--amb)"],
+    ["Deposits / live",paid,"var(--grn)"],["Est. secured","£"+rev.toLocaleString("en-GB",{maximumFractionDigits:0}),"var(--gold)"]];
+  $("#statCards").innerHTML=cards.map(([l,n,c])=>
+    `<div class="stat glass"><div class="n" style="color:${c}">${n}</div><div class="l">${l}</div></div>`).join("");
+}
+function rowsTable(rows){
+  if(!rows.length) return '<div class="empty">No enquiries yet.</div>';
+  return `<table><thead><tr><th>Name</th><th>Business</th><th>Package</th><th>Status</th><th>Received</th></tr></thead><tbody>${
+    rows.map(r=>`<tr class="row" data-id="${r.id}">
+      <td><b>${esc(r.name)||"—"}</b><div class="mut" style="font-size:12px">${esc(r.email)}</div></td>
+      <td>${esc(r.business)||"—"}</td>
+      <td>${esc(r.pkg)||"—"}</td>
+      <td><span class="st ${stClass(r.status)}">${esc(r.status.replace(/_/g," "))}</span></td>
+      <td class="mut">${fmt(r.created)}</td></tr>`).join("")}</tbody></table>`;
+}
+function bindRows(scope){
+  scope.querySelectorAll("tr.row").forEach(tr=>tr.onclick=()=>openDrawer(tr.dataset.id));
+}
+function renderEnquiries(rows){ const w=$("#enqWrap"); w.innerHTML=rowsTable(rows); bindRows(w); }
+function renderLatest(rows){ const w=$("#latestWrap"); $("#latestCount").textContent=rows.length+" total";
+  w.innerHTML=rowsTable(rows.slice(0,6)); bindRows(w); }
+
+function renderInbox(rows){
+  const w=$("#inboxWrap");
+  const withMsgs=rows.filter(r=>r.email);
+  if(!withMsgs.length){ w.innerHTML='<div class="empty">No contact emails yet.</div>'; return; }
+  w.innerHTML=`<table><thead><tr><th>From</th><th>Email</th><th>Preview</th><th>Thread</th><th>Date</th></tr></thead><tbody>${
+    withMsgs.map(r=>`<tr class="row" data-id="${r.id}">
+      <td><b>${esc(r.name)||esc(r.business)||"—"}</b></td>
+      <td class="mut">${esc(r.email)}</td>
+      <td class="mut" style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(r.message)||"—"}</td>
+      <td>${r.messages.length?`<span class="pill gold">${r.messages.length} msgs</span>`:'<span class="mut">—</span>'}</td>
+      <td class="mut">${fmt(r.created)}</td></tr>`).join("")}</tbody></table>`;
+  bindRows(w);
+}
+
+/* ---------- DRAWER ---------- */
+function openDrawer(id){
+  const r=CACHE.find(x=>String(x.id)===String(id)); if(!r) return;
+  const thread=r.messages.map(m=>`<div class="msg ${m.senderType==="admin"?"admin":""}">
+    <b>${esc(m.senderName||m.senderType||"")}</b> <span class="mut" style="font-size:11px">${m.createdAt?fmt(m.createdAt):""}</span>
+    <div style="margin-top:5px">${esc(m.message)}</div></div>`).join("");
+  $("#dpanel").innerHTML=`
+    <div style="display:flex;justify-content:space-between;align-items:start">
+      <div><div class="h1" style="font-size:20px">${esc(r.name)||"Enquiry"}</div>
+        <div class="mut" style="font-size:13px">${esc(r.business)||""}</div></div>
+      <button class="btn" id="closeD">Close</button>
+    </div>
+    <div style="margin-top:14px"><span class="st ${stClass(r.status)}">${esc(r.status.replace(/_/g," "))}</span></div>
+    <div class="kv">
+      <div class="k">Email</div><div>${esc(r.email)||"—"}</div>
+      <div class="k">Phone</div><div>${esc(r.phone)||"—"}</div>
+      <div class="k">Package</div><div>${esc(r.pkg)||"—"}</div>
+      <div class="k">Venue type</div><div>${esc(r.venue)||"—"}</div>
+      <div class="k">Budget</div><div>${esc(r.budget)||"—"}</div>
+      <div class="k">Received</div><div>${fmt(r.created)}</div>
+    </div>
+    ${r.message?`<div style="margin-top:20px"><label>Message</label><div class="msg">${esc(r.message)}</div></div>`:""}
+    ${r.notes?`<div style="margin-top:16px"><label>Internal notes</label><div class="msg">${esc(r.notes)}</div></div>`:""}
+    ${thread?`<div style="margin-top:20px"><label>Thread</label>${thread}</div>`:""}
+    <div style="margin-top:22px;display:flex;gap:10px">
+      <a class="btn pri" href="mailto:${esc(r.email)}">Reply by email</a>
+    </div>`;
+  $("#drawer").classList.add("on");
+  $("#closeD").onclick=closeDrawer;
+}
+function closeDrawer(){ $("#drawer").classList.remove("on"); }
+$("#drawer").onclick=e=>{ if(e.target.id==="drawer") closeDrawer(); };
+
+/* ---------- 3D HERO PARTICLE FIELD (vanilla, no deps) ---------- */
+(function(){
+  const c=$("#fx"); if(!c) return; const x=c.getContext("2d");
+  let w,h,dpr,pts;
+  function reset(){
+    dpr=Math.min(devicePixelRatio||1,2);
+    w=c.clientWidth; h=c.clientHeight;
+    c.width=w*dpr; c.height=h*dpr; x.setTransform(dpr,0,0,dpr,0,0);
+    pts=Array.from({length:Math.round(w*h/16000)},()=>({
+      x:Math.random()*w, y:Math.random()*h, z:Math.random()*.8+.2,
+      vx:(Math.random()-.5)*.25, vy:(Math.random()-.5)*.25
+    }));
+  }
+  function tick(){
+    x.clearRect(0,0,w,h);
+    for(const p of pts){
+      p.x+=p.vx*p.z; p.y+=p.vy*p.z;
+      if(p.x<0)p.x=w; if(p.x>w)p.x=0; if(p.y<0)p.y=h; if(p.y>h)p.y=0;
+      x.beginPath(); x.arc(p.x,p.y,p.z*1.6,0,7);
+      x.fillStyle="rgba(233,200,119,"+(p.z*.5)+")"; x.fill();
+    }
+    // faint links
+    for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){
+      const a=pts[i],b=pts[j],dx=a.x-b.x,dy=a.y-b.y,d=dx*dx+dy*dy;
+      if(d<12000){ x.strokeStyle="rgba(233,200,119,"+(.12*(1-d/12000))+")";
+        x.beginPath(); x.moveTo(a.x,a.y); x.lineTo(b.x,b.y); x.stroke(); }
+    }
+    requestAnimationFrame(tick);
+  }
+  const ro=new ResizeObserver(reset); ro.observe(c); reset(); tick();
+})();
+
+/* auto-resume session */
+(async()=>{ const { data:{ session } } = await sb.auth.getSession(); if(session) await gate(); })();
+</script>
+</body>
+</html>

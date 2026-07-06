@@ -1,0 +1,116 @@
+[
+  {
+    "id": "cold_outreach",
+    "name": "Cold Outreach",
+    "desc": "Warm first-touch intro — InizioWeb dark-glass aesthetic.",
+    "icon": "✉",
+    "subject": "A website that matches your venue's atmosphere",
+    "fields": [
+      { "key": "logo", "label": "Logo / Brand", "default": "INIZIOWEB", "placeholder": "INIZIOWEB" },
+      { "key": "eyebrow", "label": "Eyebrow Label", "default": "Hospitality web design studio", "placeholder": "Hospitality web design studio" },
+      { "key": "recipient_name", "label": "Recipient Name", "placeholder": "John" },
+      { "key": "company", "label": "Company / Venue Name", "placeholder": "Fornello Trattoria" },
+      { "key": "headline_suffix", "label": "Headline (after \"Hi {Name},\")", "default": " ", "placeholder": "your business already has atmosphere." },
+      { "key": "message", "label": "Your Message", "type": "textarea", "default": "I came across your venue and it clearly has real atmosphere — the kind of place people remember. I build premium, conversion-focused websites for restaurants, barbers and hospitality brands: custom-coded, mobile-first, and designed to look as good as your space feels.", "placeholder": "I came across your venue..." },
+      { "key": "message2", "label": "Second Paragraph", "type": "textarea", "default": "Everything's built with the floor, the chair and the front door in mind — reservations, online ordering and local SEO baked in from day one. I'd love to put together a free live mockup so you can feel the flow before deciding anything.", "placeholder": "A second paragraph to add depth..." },
+      { "key": "highlights", "label": "Highlights Strip", "default": "Custom-coded  ·  Booking &amp; ordering built in  ·  Mobile-first  ·  Local SEO", "placeholder": "Custom-coded · Booking built in · Mobile-first" },
+      { "key": "sender_name", "label": "Your Name", "default": "Antonio Barta", "placeholder": "Antonio Barta" },
+      { "key": "sender_role", "label": "Your Role", "default": "Founder, InizioWeb", "placeholder": "Founder, InizioWeb" },
+      { "key": "cta_link", "label": "CTA Link", "default": "https://inizioweb.co.uk", "placeholder": "https://inizioweb.co.uk" },
+      { "key": "cta_label", "label": "Button Label", "default": "See a live mockup", "placeholder": "See a live mockup" },
+      { "key": "footer", "label": "Footer Text", "default": "InizioWeb · Premium hospitality web design · United Kingdom", "placeholder": "InizioWeb · United Kingdom" }
+    ],
+    "html": "<table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"margin:0;padding:0;background:#0b0b0d;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;\"><tr><td align=\"center\" style=\"padding:32px 16px;\"><table role=\"presentation\" width=\"560\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"width:100%;max-width:560px;background:#121216;border:1px solid rgba(255,255,255,0.08);border-radius:16px;overflow:hidden;color:#ffffff;\"><tr><td style=\"padding:46px 30px 16px;text-align:center;background:radial-gradient(circle at top,rgba(255,255,255,0.08),transparent);\"><div style=\"font-size:15px;letter-spacing:4px;text-transform:uppercase;color:#ffffff;\">{{logo}}</div><div style=\"font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#d9b88a;margin-top:10px;\">{{eyebrow}}</div></td></tr><tr><td style=\"padding:34px 42px 10px;\"><h1 style=\"font-size:24px;line-height:1.35;font-weight:600;margin:0 0 22px;color:#ffffff;\">Hi {{recipient_name}}{{headline_suffix}}</h1><p style=\"font-size:15px;line-height:1.8;color:#b6b6bd;margin:0 0 20px;\">{{message}}</p><p style=\"font-size:15px;line-height:1.8;color:#b6b6bd;margin:0 0 26px;\">{{message2}}</p></td></tr><tr><td style=\"padding:0 42px 30px;\"><div style=\"border-top:1px solid rgba(255,255,255,0.08);border-bottom:1px solid rgba(255,255,255,0.08);padding:18px 0;text-align:center;font-size:12px;letter-spacing:0.4px;color:#8a8a92;\">{{highlights}}</div></td></tr><tr><td style=\"padding:0 42px 6px;text-align:center;\"><a href=\"{{cta_link}}\" style=\"display:inline-block;padding:15px 34px;border-radius:10px;background:linear-gradient(135deg,#ffffff,#cfcfcf);color:#0b0b0d;text-decoration:none;font-weight:600;font-size:14px;\">{{cta_label}}</a></td></tr><tr><td style=\"padding:34px 42px 40px;\"><p style=\"font-size:14px;line-height:1.5;color:#e8e8ea;margin:0;\">{{sender_name}}<br><span style=\"color:#77777f;font-size:13px;\">{{sender_role}}</span></p></td></tr><tr><td style=\"text-align:center;padding:20px;font-size:11px;color:#ffffff;opacity:0.4;border-top:1px solid rgba(255,255,255,0.06);\">{{footer}}</td></tr></table></td></tr></table>"
+  },
+  {
+    "id": "website_proposal",
+    "name": "Website Proposal",
+    "desc": "Pitch a website / redesign project.",
+    "icon": "◈",
+    "subject": "A proposal for {{company}}",
+    "fields": [
+      { "key": "recipient_name", "label": "Recipient Name", "placeholder": "John" },
+      { "key": "company", "label": "Company Name", "placeholder": "Starbucks" },
+      { "key": "message", "label": "Personal Message", "type": "textarea", "placeholder": "I noticed your site could..." },
+      { "key": "project_description", "label": "Project Description", "type": "textarea", "placeholder": "A modern, fast website that..." },
+      { "key": "cta_link", "label": "CTA Link", "placeholder": "https://yoursite.com/proposal" }
+    ],
+    "html": "<div style=\"margin:0;padding:0;background:#0b0b0d;\"><div style=\"font-family:'Helvetica Neue',Arial,sans-serif;max-width:560px;margin:0 auto;background:#111114;border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:44px 40px;color:#e8e8ea;\"><p style=\"font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#77777f;margin:0 0 10px;\">Proposal</p><h1 style=\"font-size:26px;font-weight:600;margin:0 0 18px;color:#fff;\">Hello {{recipient_name}}</h1><p style=\"font-size:15px;line-height:1.7;color:#b6b6bd;margin:0 0 16px;\">I noticed {{company}} and had a few thoughts.</p><p style=\"font-size:15px;line-height:1.7;color:#b6b6bd;margin:0 0 20px;\">{{message}}</p><div style=\"background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:18px 20px;margin:0 0 28px;\"><p style=\"font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#77777f;margin:0 0 8px;\">What I'd build</p><p style=\"font-size:14px;line-height:1.6;color:#cfcfd6;margin:0;\">{{project_description}}</p></div><a href=\"{{cta_link}}\" style=\"display:inline-block;background:linear-gradient(135deg,#ffffff,#d8d8e0);color:#0b0b0d;text-decoration:none;font-weight:600;font-size:14px;padding:13px 22px;border-radius:12px;\">View Full Proposal</a></div></div>"
+  },
+  {
+    "id": "follow_up",
+    "name": "Follow-up",
+    "desc": "Gentle nudge after no reply.",
+    "icon": "↻",
+    "subject": "Following up, {{recipient_name}}",
+    "fields": [
+      { "key": "logo", "label": "Logo / Brand", "default": "INIZIOWEB", "placeholder": "INIZIOWEB" },
+      { "key": "eyebrow", "label": "Eyebrow Label", "default": "Hospitality web design studio", "placeholder": "Hospitality web design studio" },
+      { "key": "recipient_name", "label": "Recipient Name", "placeholder": "John" },
+      { "key": "message", "label": "Your Message", "type": "textarea", "default": "Just circling back on my note about your website. No pressure at all — but if you're curious, I'd be glad to put together a quick live mockup so you can feel what yours could look like. Happy to find a time that suits you.", "placeholder": "Just circling back on..." },
+      { "key": "sender_name", "label": "Your Name", "default": "Antonio Barta", "placeholder": "Antonio Barta" },
+      { "key": "sender_role", "label": "Your Role", "default": "Founder, InizioWeb", "placeholder": "Founder, InizioWeb" },
+      { "key": "cta_link", "label": "CTA Link", "default": "https://inizioweb.co.uk", "placeholder": "https://inizioweb.co.uk" },
+      { "key": "cta_label", "label": "Button Label", "default": "Grab a time", "placeholder": "Grab a time" },
+      { "key": "footer", "label": "Footer Text", "default": "InizioWeb · Premium hospitality web design · United Kingdom", "placeholder": "InizioWeb · United Kingdom" }
+    ],
+    "html": "<table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"margin:0;padding:0;background:#0b0b0d;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;\"><tr><td align=\"center\" style=\"padding:32px 16px;\"><table role=\"presentation\" width=\"560\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"width:100%;max-width:560px;background:#121216;border:1px solid rgba(255,255,255,0.08);border-radius:16px;overflow:hidden;color:#ffffff;\"><tr><td style=\"padding:46px 30px 16px;text-align:center;background:radial-gradient(circle at top,rgba(255,255,255,0.08),transparent);\"><div style=\"font-size:15px;letter-spacing:4px;text-transform:uppercase;color:#ffffff;\">{{logo}}</div><div style=\"font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#d9b88a;margin-top:10px;\">{{eyebrow}}</div></td></tr><tr><td style=\"padding:34px 42px 14px;\"><h1 style=\"font-size:23px;line-height:1.35;font-weight:600;margin:0 0 22px;color:#ffffff;\">Hi {{recipient_name}},</h1><p style=\"font-size:15px;line-height:1.8;color:#b6b6bd;margin:0 0 28px;\">{{message}}</p></td></tr><tr><td style=\"padding:0 42px 6px;text-align:center;\"><a href=\"{{cta_link}}\" style=\"display:inline-block;padding:15px 34px;border-radius:10px;background:linear-gradient(135deg,#ffffff,#cfcfcf);color:#0b0b0d;text-decoration:none;font-weight:600;font-size:14px;\">{{cta_label}}</a></td></tr><tr><td style=\"padding:34px 42px 40px;\"><p style=\"font-size:14px;line-height:1.5;color:#e8e8ea;margin:0;\">{{sender_name}}<br><span style=\"color:#77777f;font-size:13px;\">{{sender_role}}</span></p></td></tr><tr><td style=\"text-align:center;padding:20px;font-size:11px;color:#ffffff;opacity:0.4;border-top:1px solid rgba(255,255,255,0.06);\">{{footer}}</td></tr></table></td></tr></table>"
+  },
+  {
+    "id": "invoice_reminder",
+    "name": "Invoice Reminder",
+    "desc": "Polite payment reminder.",
+    "icon": "▸",
+    "subject": "Invoice {{invoice_number}} — friendly reminder",
+    "fields": [
+      { "key": "logo", "label": "Logo / Brand", "default": "INIZIOWEB", "placeholder": "INIZIOWEB" },
+      { "key": "eyebrow", "label": "Eyebrow Label", "default": "Hospitality web design studio", "placeholder": "Hospitality web design studio" },
+      { "key": "recipient_name", "label": "Recipient Name", "placeholder": "John" },
+      { "key": "invoice_number", "label": "Invoice Number", "placeholder": "#1042" },
+      { "key": "amount", "label": "Amount Due", "placeholder": "£1,200" },
+      { "key": "due_date", "label": "Due Date", "placeholder": "July 15, 2026" },
+      { "key": "cta_link", "label": "Payment Link", "placeholder": "https://pay.stripe.com/..." },
+      { "key": "cta_label", "label": "Button Label", "default": "Pay invoice", "placeholder": "Pay invoice" },
+      { "key": "footer", "label": "Footer Text", "default": "InizioWeb · Payments handled securely by Stripe · United Kingdom", "placeholder": "InizioWeb · United Kingdom" }
+    ],
+    "html": "<table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"margin:0;padding:0;background:#0b0b0d;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;\"><tr><td align=\"center\" style=\"padding:32px 16px;\"><table role=\"presentation\" width=\"560\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"width:100%;max-width:560px;background:#121216;border:1px solid rgba(255,255,255,0.08);border-radius:16px;overflow:hidden;color:#ffffff;\"><tr><td style=\"padding:46px 30px 16px;text-align:center;background:radial-gradient(circle at top,rgba(255,255,255,0.08),transparent);\"><div style=\"font-size:15px;letter-spacing:4px;text-transform:uppercase;color:#ffffff;\">{{logo}}</div><div style=\"font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#d9b88a;margin-top:10px;\">{{eyebrow}}</div></td></tr><tr><td style=\"padding:34px 42px 8px;\"><h1 style=\"font-size:23px;line-height:1.35;font-weight:600;margin:0 0 18px;color:#ffffff;\">Hi {{recipient_name}},</h1><p style=\"font-size:15px;line-height:1.8;color:#b6b6bd;margin:0 0 24px;\">A quick, friendly reminder about the invoice below.</p><table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"width:100%;border-collapse:collapse;margin:0 0 8px;\"><tr><td style=\"padding:13px 0;border-bottom:1px solid rgba(255,255,255,0.06);font-size:14px;color:#77777f;\">Invoice</td><td style=\"padding:13px 0;border-bottom:1px solid rgba(255,255,255,0.06);font-size:14px;color:#fff;text-align:right;\">{{invoice_number}}</td></tr><tr><td style=\"padding:13px 0;border-bottom:1px solid rgba(255,255,255,0.06);font-size:14px;color:#77777f;\">Amount due</td><td style=\"padding:13px 0;border-bottom:1px solid rgba(255,255,255,0.06);font-size:16px;color:#fff;text-align:right;font-weight:600;\">{{amount}}</td></tr><tr><td style=\"padding:13px 0;font-size:14px;color:#77777f;\">Due date</td><td style=\"padding:13px 0;font-size:14px;color:#fff;text-align:right;\">{{due_date}}</td></tr></table></td></tr><tr><td style=\"padding:22px 42px 6px;text-align:center;\"><a href=\"{{cta_link}}\" style=\"display:inline-block;padding:15px 34px;border-radius:10px;background:linear-gradient(135deg,#ffffff,#cfcfcf);color:#0b0b0d;text-decoration:none;font-weight:600;font-size:14px;\">{{cta_label}}</a></td></tr><tr><td style=\"padding:26px 42px 40px;text-align:center;\"><p style=\"font-size:13px;line-height:1.6;color:#77777f;margin:0;\">Thank you — I appreciate your business.</p></td></tr><tr><td style=\"text-align:center;padding:20px;font-size:11px;color:#ffffff;opacity:0.4;border-top:1px solid rgba(255,255,255,0.06);\">{{footer}}</td></tr></table></td></tr></table>"
+  },
+  {
+    "id": "portfolio_showcase",
+    "name": "Portfolio Showcase",
+    "desc": "Share recent work with a lead.",
+    "icon": "▣",
+    "subject": "Some recent work for you, {{recipient_name}}",
+    "fields": [
+      { "key": "recipient_name", "label": "Recipient Name", "placeholder": "John" },
+      { "key": "message", "label": "Intro Message", "type": "textarea", "placeholder": "Thought you'd enjoy a few recent projects..." },
+      { "key": "highlight", "label": "Highlight Project", "type": "textarea", "placeholder": "A landing page that lifted conversions 40%..." },
+      { "key": "sender_name", "label": "Your Name", "placeholder": "Antonio" },
+      { "key": "cta_link", "label": "Portfolio Link", "placeholder": "https://yourportfolio.com" }
+    ],
+    "html": "<div style=\"margin:0;padding:0;background:#0b0b0d;\"><div style=\"font-family:'Helvetica Neue',Arial,sans-serif;max-width:560px;margin:0 auto;background:#111114;border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:44px 40px;color:#e8e8ea;\"><h1 style=\"font-size:24px;font-weight:600;margin:0 0 18px;color:#fff;\">Hi {{recipient_name}},</h1><p style=\"font-size:15px;line-height:1.7;color:#b6b6bd;margin:0 0 20px;\">{{message}}</p><div style=\"background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:18px 20px;margin:0 0 28px;\"><p style=\"font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#77777f;margin:0 0 8px;\">Featured</p><p style=\"font-size:14px;line-height:1.6;color:#cfcfd6;margin:0;\">{{highlight}}</p></div><a href=\"{{cta_link}}\" style=\"display:inline-block;background:linear-gradient(135deg,#ffffff,#d8d8e0);color:#0b0b0d;text-decoration:none;font-weight:600;font-size:14px;padding:13px 22px;border-radius:12px;\">See the Portfolio</a><p style=\"font-size:14px;color:#77777f;margin:32px 0 0;\">Cheers,<br>{{sender_name}}</p></div></div>"
+  },
+  {
+    "id": "inizioweb_showcase",
+    "name": "InizioWeb Showcase",
+    "desc": "Premium agency pitch — hero, feature cards, CTA.",
+    "icon": "❖",
+    "subject": "{{headline}}",
+    "fields": [
+      { "key": "logo", "label": "Logo / Brand", "default": "InizioWeb", "placeholder": "InizioWeb" },
+      { "key": "headline", "label": "Hero Headline", "default": "Premium websites for modern businesses", "placeholder": "Premium websites for modern businesses" },
+      { "key": "intro", "label": "Hero Subtext", "type": "textarea", "default": "You already have a brand. Your website should feel like it. Built with performance, booking flow and conversion in mind.", "placeholder": "You already have a brand..." },
+      { "key": "f1_title", "label": "Feature 1 Title", "default": "⚡ High-performance design", "placeholder": "⚡ High-performance design" },
+      { "key": "f1_text", "label": "Feature 1 Text", "type": "textarea", "default": "Fast-loading, mobile-first builds designed to convert visitors into bookings.", "placeholder": "Fast-loading, mobile-first builds..." },
+      { "key": "f2_title", "label": "Feature 2 Title", "default": "📅 Booking & ordering systems", "placeholder": "📅 Booking & ordering systems" },
+      { "key": "f2_text", "label": "Feature 2 Text", "type": "textarea", "default": "Seamless integrations for restaurants, salons and hospitality brands.", "placeholder": "Seamless integrations..." },
+      { "key": "f3_title", "label": "Feature 3 Title", "default": "📍 Local SEO built-in", "placeholder": "📍 Local SEO built-in" },
+      { "key": "f3_text", "label": "Feature 3 Text", "type": "textarea", "default": "Optimised for Google visibility so your business gets found first.", "placeholder": "Optimised for Google visibility..." },
+      { "key": "cta_text", "label": "CTA Line", "default": "Let's build something that feels like your brand.", "placeholder": "Let's build something..." },
+      { "key": "cta_label", "label": "Button Label", "default": "Start a Project", "placeholder": "Start a Project" },
+      { "key": "cta_link", "label": "Button Link", "default": "https://inizioweb.co.uk", "placeholder": "https://inizioweb.co.uk" },
+      { "key": "footer", "label": "Footer Text", "default": "© 2026 InizioWeb • Premium Web Design Studio • UK", "placeholder": "© 2026 InizioWeb..." }
+    ],
+    "html": "<table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"margin:0;padding:0;background:#0b0b0d;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;\"><tr><td align=\"center\" style=\"padding:32px 16px;\"><table role=\"presentation\" width=\"600\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"width:100%;max-width:600px;background:#121216;border:1px solid rgba(255,255,255,0.08);border-radius:16px;overflow:hidden;color:#ffffff;\"><tr><td style=\"padding:0;\"><div style=\"padding:40px 30px 20px;text-align:center;background:radial-gradient(circle at top,rgba(255,255,255,0.08),transparent);\"><div style=\"font-size:18px;letter-spacing:3px;text-transform:uppercase;color:#ffffff;\">{{logo}}</div></div><div style=\"padding:30px;text-align:center;\"><h1 style=\"font-size:26px;margin:0 0 10px;font-weight:600;\">{{headline}}</h1><p style=\"font-size:14px;opacity:0.75;line-height:1.6;margin:0;\">{{intro}}</p></div><div style=\"height:1px;background:rgba(255,255,255,0.08);margin:20px 0;\"></div><div style=\"padding:25px 30px;\"><div style=\"background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:20px;margin-bottom:15px;\"><h3 style=\"margin:0 0 6px;font-size:15px;\">{{f1_title}}</h3><p style=\"margin:0;font-size:13px;opacity:0.7;line-height:1.5;\">{{f1_text}}</p></div><div style=\"background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:20px;margin-bottom:15px;\"><h3 style=\"margin:0 0 6px;font-size:15px;\">{{f2_title}}</h3><p style=\"margin:0;font-size:13px;opacity:0.7;line-height:1.5;\">{{f2_text}}</p></div><div style=\"background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:20px;\"><h3 style=\"margin:0 0 6px;font-size:15px;\">{{f3_title}}</h3><p style=\"margin:0;font-size:13px;opacity:0.7;line-height:1.5;\">{{f3_text}}</p></div></div><div style=\"height:1px;background:rgba(255,255,255,0.08);margin:20px 0;\"></div><div style=\"text-align:center;padding:30px;\"><p style=\"opacity:0.7;font-size:13px;margin-bottom:15px;\">{{cta_text}}</p><a href=\"{{cta_link}}\" style=\"display:inline-block;padding:12px 22px;border-radius:10px;background:linear-gradient(135deg,#ffffff,#cfcfcf);color:#0b0b0d;text-decoration:none;font-weight:600;font-size:13px;\">{{cta_label}}</a></div><div style=\"text-align:center;padding:20px;font-size:11px;opacity:0.5;\">{{footer}}</div></td></tr></table></td></tr></table>"
+  }
+]
