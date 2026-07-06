@@ -1,13 +1,13 @@
 {
   "name": "iniziomail",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "InizioMail — template-based premium email sender (Gmail API)",
   "main": "src/main.js",
   "author": "Antonio",
   "license": "MIT",
   "repository": {
-  "type": "git",
-  "url": "https://github.com/Fuger1/InizioMail.git"
+    "type": "git",
+    "url": "https://github.com/Fuger1/InizioMail.git"
   },
   "scripts": {
     "start": "electron .",
